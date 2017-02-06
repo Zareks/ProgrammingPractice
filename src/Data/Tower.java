@@ -12,7 +12,7 @@ import org.newdawn.slick.opengl.Texture;
 public abstract class Tower implements Entity {
 
 	private float x, y, timeSinceLastShot, firingSpeed, angle;
-	private int width, height, range;
+	private int width, height, range, cost;
 	private Enemy target;
 	private Texture[] textures;
 	private CopyOnWriteArrayList<Enemy> enemies;
@@ -24,6 +24,7 @@ public abstract class Tower implements Entity {
 		this.textures = type.textures;
 		this.range = type.range;
 		this.firingSpeed = type.firingSpeed;
+		this.cost = type.cost;
 		this.x = startTile.getX();
 		this.y = startTile.getY();
 		this.width = startTile.getWidth();
@@ -144,5 +145,9 @@ public abstract class Tower implements Entity {
 
 	public Enemy getTarget() {
 		return target;
+	}
+	
+	public int getCost(){
+		return cost;
 	}
 }

@@ -13,9 +13,7 @@ public class WaveManager {
 		this.enemiesPerWave = enemiesPerWave;
 		this.timeSinceLastWave = 0;
 		this.waveNum = 0;
-		
 		this.currentWave = null;
-		
 		newWave();
 	}
 	

@@ -30,7 +30,7 @@ public class Player {
 		Cash = 0;
 		Lives = 0;
 	}
-
+	//init lives and cash values for player
 	public void setup(){
 		Cash = 50;
 		Lives = 10;
@@ -47,20 +47,19 @@ public class Player {
 	public static void modifyLives(int amount){
 		Lives += amount;
 	}
-	
+
 	public void update() {
+		//update all towers in game
 		for (Tower t : towerList) {
 			t.update();
 			t.draw();
 			t.updateEnemtList(waveManager.getCurrentWave().getEnemyList());
 		}
-
 		// handle mouse input
 		if (Mouse.isButtonDown(0) && !leftMouseButtonDown) {
 			if (modifyCash(-20))
 			towerList.add(new TowerCannonBlue(TowerType.CannonBlue,
 					grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE),waveManager.getCurrentWave().getEnemyList()));
-
 		}
 		
 		if (Mouse.isButtonDown(1) && !rightMouseButtonDown) {

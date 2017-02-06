@@ -12,7 +12,7 @@ public class Enemy implements Entity{
 	private Texture texture,healthBackground,healthForeground,healthBorder;
 	private Tile startTile;
 	private TileGrid grid;
-	private boolean first = true, alive = true;
+	private boolean first, alive;
 	
 	private ArrayList<Checkpoint> checkpoints;
 	private int[] directions;
@@ -33,7 +33,8 @@ public class Enemy implements Entity{
 		this.startHealth = health;
 		this.startTile = startTile;
 		this.grid = grid;
-		
+		this.first = true;
+		this.alive = true;
 		this.checkpoints = new ArrayList<Checkpoint>();
 		this.directions = new int[2];
 		//[0] = x | [1] = y
@@ -44,6 +45,7 @@ public class Enemy implements Entity{
 	}
 	
 	private void populateCheckpointList(){
+		//add first checkpoint manually based on startTile
 		checkpoints.add(findNextC(startTile,directions = findNextDir(startTile)));
 		
 		
@@ -92,6 +94,7 @@ public class Enemy implements Entity{
 		Tile d = grid.getTile(s.getXPlace(), s.getYPlace()+1);
 		Tile l = grid.getTile(s.getXPlace()-1, s.getYPlace());
 		
+		//check if current inhabited tiletype matches cardinal directions tyletype
 		if (s.getType() == u.getType() && directions[1] != 1){
 			dir[0]= 0;
 			dir[1]=-1;
@@ -108,21 +111,22 @@ public class Enemy implements Entity{
 			dir[0]= 2;
 			dir[1]= 2;
 		}
-		
 		return dir;
 	}
 	
 	public void update(){
-		System.out.println(speed);
+		//check if it is the first time this class is updated
 		if (first)
 			first = false;
 		else{
 			if (checkpointReached()){
+				//check if there are more checkpoints before moving on
 				if (currentCheckpoint + 1 == checkpoints.size())
 					endOfMazeReached();
 				else
 					currentCheckpoint++;
 			}else {
+				//if not at a checkpoint continue in current direction
 				x += Delta() * checkpoints.get(currentCheckpoint).getxDir() * speed;
 				y += Delta() * checkpoints.get(currentCheckpoint).getyDir() * speed;
 			}
@@ -153,7 +157,7 @@ public class Enemy implements Entity{
 	private void die() {
 		alive = false;
 	}
-	
+	//Take damage from outside source
 	public void damage(int amount){
 		health -= amount;
 		if (health <= 0){
@@ -164,7 +168,9 @@ public class Enemy implements Entity{
 	
 	public void draw(){
 		float healthPercentage = health/startHealth;
+		//enemy texture
 		DrawQuadTex(texture,x,y,width,height);
+		//healthbar textures
 		DrawQuadTex(healthBackground,x,y - (TILE_SIZE/4),width,TILE_SIZE/8);
 		DrawQuadTex(healthForeground,x,y - (TILE_SIZE/4),TILE_SIZE*healthPercentage,TILE_SIZE/8);
 		DrawQuadTex(healthBorder,x,y - (TILE_SIZE/4),width,TILE_SIZE/8);

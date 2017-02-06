@@ -5,17 +5,19 @@ import Helpers.Artist;
 public class TileGrid {
 	public Tile[][] map;
 	private int tileswide,tileshigh;
+	
+	//creates empty(grass) map when passed to args
 	public TileGrid(){
 		this.tileswide = 20;
 		this.tileshigh = 12;
-		map = new Tile[20][12];
+		map = new Tile[tileswide][tileshigh];
 		for (int i = 0;i<map.length;i++){
 			for (int j = 0;j< map[i].length;j++){
 				map[i][j] = new Tile(i*Artist.TILE_SIZE,j*Artist.TILE_SIZE,Artist.TILE_SIZE,Artist.TILE_SIZE,TileType.Grass);
 			}
 		}
 	}
-	
+	//creates specific map that is passed by args
 	public TileGrid(int[][] newMap){
 		this.tileswide = newMap[0].length;
 		this.tileshigh = newMap.length;

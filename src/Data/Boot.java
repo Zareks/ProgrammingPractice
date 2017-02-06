@@ -12,8 +12,12 @@ public class Boot {
 
 	public Boot() {
 		
+		
+		//call static method in artist class to init OpenGL calls
 		beginSession();
-
+		
+		
+		//Main game loop
 		while (!Display.isCloseRequested()) {
 			Clock.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);

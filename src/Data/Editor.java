@@ -45,7 +45,7 @@ public class Editor {
 		grid.setTile((int) Math.floor(Mouse.getX() / TILE_SIZE), (int) Math.floor((HEIGHT - Mouse.getY() - 1) / TILE_SIZE),
 				types[index]);
 	}
-
+	//Allow editor to change the type of tile selected
 	private void moveIndex() {
 		index++;
 		if (index > types.length - 1) {
